@@ -249,7 +249,7 @@ footer p{margin:0}
 .lb-nav{display:flex;justify-content:space-between;margin-top:auto;padding-top:8px;border-top:1px solid var(--line)}
 @media (max-width:860px){
   .lb-inner{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto;overflow-y:auto;height:100%}
-  .lb-media{height:auto;padding:16px}
+  .lb-media{height:auto;min-height:auto;padding:16px}
   .lb-media img{max-height:60vh}
   .lb-panel{border-left:0;border-top:1px solid var(--line);overflow:visible;padding-inline:20px}
 }
@@ -396,6 +396,26 @@ const SIZES = [
    picked at random from the landscape-shaped prints on each visit.
    Until a print has src, a placeholder image is painted. */
 const PRINTS = [
+  { title:"Thicket", year:2024, place:"Los Angeles, September", ratio:[2048,1583],
+    src:"https://live.staticflickr.com/65535/55450702612_5012cc86b4_k.jpg",
+    flickr:"https://www.flickr.com/photos/204847343@N07/55450702612/",
+    alt:"A dense crosshatch of woody branches against brighter, feathery foliage behind" },
+  { title:"Deadfall", year:2024, place:"Yosemite, September", ratio:[2048,1583],
+    src:"https://live.staticflickr.com/65535/55451700081_13c107c8be_k.jpg",
+    flickr:"https://www.flickr.com/photos/204847343@N07/55451700081/",
+    alt:"Fallen logs and bare branches lying in dry grass at the edge of an open woodland" },
+  { title:"Grid at night", year:2024, place:"Los Angeles, September", ratio:[2048,1365],
+    src:"https://live.staticflickr.com/65535/55451875869_9910112e54_k.jpg",
+    flickr:"https://www.flickr.com/photos/204847343@N07/55451875869/",
+    alt:"The city at night from above, a carpet of lights running out to the downtown towers on the horizon" },
+  { title:"Sprawl", year:2024, place:"Los Angeles, September", ratio:[2048,1365],
+    src:"https://live.staticflickr.com/65535/55452104150_ed0aec2ca1_k.jpg",
+    flickr:"https://www.flickr.com/photos/204847343@N07/55452104150/",
+    alt:"An elevated view across a wooded ridge to the city spreading out and dissolving into haze at the horizon" },
+  { title:"Cable cars after dark", year:2024, place:"San Francisco, September", ratio:[2048,1365],
+    src:"https://live.staticflickr.com/65535/55451883734_781d704116_k.jpg",
+    flickr:"https://www.flickr.com/photos/204847343@N07/55451883734/",
+    alt:"A downtown street at night with cable cars stopped at an intersection, storefronts and signs lit down the block" },
   { title:"Harbour Fog", series:"Coast", year:2024, place:"North shore, March", ratio:[3,2],
     alt:"Fog over a still harbour, a pale sun above a low line of hills",
     scene:{seed:11,horizon:.58,sky:["#aeb8bd","#dfe2df"],sun:{x:.62,y:.36,r:.022,c:"#f7f3ea"},water:"#8f9a9c",layers:["#a9b2b3","#8c9697"],amp:[.03,.05],freq:3,fog:.5} },
@@ -428,10 +448,11 @@ const DEMO_FILL = 30;
   const series=["Coast","Coast","Coast","Coast","Land","Land","Land","Land","Winter","Winter","Winter","Winter","Night","Night","Night","Night",
     "Coast","Coast","Land","Land","Winter","Winter","Night"];
   const ratios=[[3,2],[4,5],[3,2],[1,1],[3,2],[2,1],[4,5],[3,2]];
+  const demo=PRINTS.filter(p=>p.scene);
   let k=0;
-  while(PRINTS.length<DEMO_FILL&&k<names.length){
-    const base=PRINTS[k%7];
-    const pool=PRINTS.slice(0,7).filter(p=>p.series===series[k]);
+  while(demo.length&&PRINTS.length<DEMO_FILL&&k<names.length){
+    const base=demo[k%demo.length];
+    const pool=demo.filter(p=>p.series===series[k]);
     const src=(pool.length?pool[k%pool.length]:base);
     PRINTS.push({title:names[k],series:series[k],year:2023+(k%3),place:src.place,ratio:ratios[k%ratios.length],
       alt:src.alt,small:true,scene:{...src.scene,seed:src.scene.seed+101+k*7}});

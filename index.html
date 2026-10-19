@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Print Room</title>
+<meta name="description" content="Fine art photographs, printed to order. Shipping within Canada.">
+<!-- Remove the next line at launch so search engines can list the site. -->
+<meta name="robots" content="noindex, nofollow">
+<style>
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Work+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: one featured print develops on arrival, then every print on a light mat in a calm grid. */
+:root{
+  --wall:#FFFFFF;
+  --paper:#F5F6F4;
+  --ink:#1D201F;
+  --muted:#5F6662;
+  --line:#DADDD8;
+  --accent:#34495E;
+  --scrim:rgba(255,255,255,.98);
+  --shadow:rgba(29,32,31,.22);
+  --serif:"EB Garamond","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --sans:"Work Sans","Helvetica Neue",Arial,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --wall:#151716;--paper:#1C1F1E;--ink:#E6E7E3;--muted:#9CA29E;--line:#2F3432;--accent:#A9BCCF;--scrim:rgba(21,23,22,.975);--shadow:rgba(0,0,0,.6);color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --wall:#151716;--paper:#1C1F1E;--ink:#E6E7E3;--muted:#9CA29E;--line:#2F3432;--accent:#A9BCCF;--scrim:rgba(21,23,22,.975);--shadow:rgba(0,0,0,.6);color-scheme:dark;
+}
+
+html{scroll-behavior:smooth}
+body{
+  background:var(--wall);color:var(--ink);
+  font-family:var(--sans);font-size:15px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap{max-width:1240px;margin-inline:auto}
+@media (min-width:760px){.wrap{padding-inline:32px}}
+
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Header */
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:16px 32px;flex-wrap:wrap;padding-block:28px 24px}
+.name{font-family:var(--serif);font-size:1.6rem;letter-spacing:.01em;text-decoration:none}
+.top nav{display:flex;gap:22px;flex-wrap:wrap;font-size:14px}
+.top nav a{text-decoration:none;color:var(--muted);transition:color .2s}
+.top nav a:hover{color:var(--ink)}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:28px 24px;padding-block:8px clamp(72px,10vw,140px)}
+.hero-frame{grid-column:1/-1;aspect-ratio:16/9;max-width:100%;background:var(--paper);overflow:hidden}
+.hero-frame button{all:unset;display:block;width:100%;height:100%;cursor:zoom-in}
+.hero-frame button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.hero-frame img{display:block;width:100%;height:100%;object-fit:cover}
+.hero-frame img.developing{animation:develop 3.4s cubic-bezier(.3,.1,.2,1) both}
+@keyframes develop{
+  0%{filter:brightness(1.95) contrast(.28) saturate(0) blur(3px)}
+  55%{filter:brightness(1.22) contrast(.78) saturate(.55) blur(.5px)}
+  100%{filter:none}
+}
+.hero .label{grid-column:1 / span 4;margin-top:0}
+.intro{grid-column:6 / -1;font-family:var(--serif);font-size:clamp(1.45rem,2.4vw,2.05rem);line-height:1.3;margin:0;max-width:30ch;text-wrap:balance}
+@media (max-width:860px){
+  .hero-frame{aspect-ratio:4/3}
+  .hero .label,.intro{grid-column:1/-1}
+  .intro{order:-1}
+}
+
+/* Wall labels */
+.label{display:grid;gap:1px;margin-top:16px;font-size:13.5px;color:var(--muted);max-width:36ch}
+.label p{margin:0}
+.label .t{font-family:var(--serif);font-size:1.3rem;color:var(--ink);line-height:1.25;margin-bottom:3px}
+.buy{display:flex;align-items:center;gap:10px 16px;flex-wrap:wrap;margin-top:12px}
+.price{font-size:15px;font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
+.tax{font-size:13px;font-weight:400;color:var(--muted)}
+.sold{font-size:12px;letter-spacing:.04em;color:var(--muted);border:1px solid var(--line);padding:2px 8px}
+.inquire{
+  background:transparent;border:1px solid var(--ink);color:var(--ink);
+  font-size:13px;font-weight:500;padding:6px 14px;cursor:pointer;
+  transition:background .2s,color .2s;
+}
+.inquire:hover{background:var(--ink);color:var(--wall)}
+
+/* Section heads */
+.sect{padding-block:clamp(56px,8vw,96px);border-top:1px solid var(--line)}
+.sect-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px 24px;flex-wrap:wrap;margin-bottom:clamp(36px,5vw,64px)}
+.sect-head h2{font-family:var(--serif);font-weight:400;font-size:clamp(1.9rem,3.2vw,2.6rem);margin:0;line-height:1.1}
+.sect-head p{margin:0;color:var(--muted);font-size:14px}
+
+
+/* All prints: contact sheet */
+.filters{display:flex;flex-wrap:wrap;gap:4px 20px;margin:calc(-1 * clamp(16px,3vw,36px)) 0 clamp(28px,4vw,40px)}
+.filters button{background:none;border:0;padding:4px 0;font-size:14px;color:var(--muted);cursor:pointer;text-underline-offset:5px}
+.filters button span{font-size:12px;font-variant-numeric:tabular-nums;margin-left:2px}
+.filters button:hover{color:var(--ink)}
+.filters button[aria-pressed="true"]{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px}
+.sheet{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:40px 24px}
+.cell{min-width:0;display:grid;gap:10px;align-content:start}
+.cell{position:relative}
+.mat{position:relative;display:block;width:100%;max-width:100%;aspect-ratio:1/1;padding:0;border:0;background:var(--paper);cursor:zoom-in;
+  transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
+.mat img{position:absolute;inset:12%;width:76%;height:76%;object-fit:contain;transition:inset .45s var(--ease),width .45s var(--ease),height .45s var(--ease)}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  .cell:hover,.cell:focus-within{z-index:2}
+  .cell:hover .mat,.mat:focus-visible{transform:scale(1.12);box-shadow:0 24px 48px -24px var(--shadow)}
+  .cell:hover .mat img,.mat:focus-visible img{inset:5%;width:90%;height:90%}
+}
+.cap{margin:0;display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:13px;color:var(--muted)}
+.cap em{font-family:var(--serif);font-size:1.05rem;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.cap span{white-space:nowrap;font-variant-numeric:tabular-nums}
+@media (max-width:1000px){.sheet{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:620px){.sheet{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 14px}.cap{flex-direction:column;gap:0}}
+
+/* How to buy */
+.journey{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;position:relative;view-timeline-name:--journey}
+.journey::before,.journey::after{content:"";position:absolute;left:8px;right:0;top:46px;height:1px;background:var(--line)}
+.journey::after{background:var(--ink);transform-origin:left center}
+.journey li{position:relative;z-index:1;display:grid;align-content:start;min-width:0}
+.when{height:22px;line-height:22px;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.mark{display:block;width:16px;height:16px;margin:16px 0 24px;border-radius:50%;background:var(--wall)}
+.mark i{display:block;width:100%;height:100%;border-radius:50%;background:var(--ink)}
+.journey h3{margin:0 0 6px;font-family:var(--serif);font-weight:400;font-size:1.45rem;line-height:1.2}
+.journey p{margin:0;color:var(--muted);max-width:30ch}
+@media (max-width:760px){
+  .journey{grid-template-columns:minmax(0,1fr);gap:36px}
+  .journey::before,.journey::after{left:8px;right:auto;top:9px;bottom:9px;width:1px;height:auto}
+  .journey::after{transform-origin:center top}
+  .journey li{padding-left:36px}
+  .mark{position:absolute;left:0;top:1px;margin:0}
+  .when{height:auto;line-height:1.4;margin-bottom:4px;white-space:normal}
+}
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion: no-preference){
+    .journey::after{animation:draw-x linear both;animation-timeline:--journey;animation-range:cover 15% cover 48%}
+    .mark i{animation:develop-mark linear both;animation-timeline:--journey}
+    .journey li:nth-child(1) .mark i{animation-range:cover 12% cover 18%}
+    .journey li:nth-child(2) .mark i{animation-range:cover 23% cover 29%}
+    .journey li:nth-child(3) .mark i{animation-range:cover 34% cover 40%}
+    .journey li:nth-child(4) .mark i{animation-range:cover 45% cover 51%}
+    @media (max-width:760px){.journey::after{animation-name:draw-y}}
+  }
+}
+@keyframes draw-x{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes draw-y{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes develop-mark{from{opacity:.12}to{opacity:1}}
+
+.note{margin-top:clamp(56px,7vw,88px);padding-top:28px;border-top:1px solid var(--line)}
+.note h3{font-family:var(--serif);font-weight:400;font-size:1.35rem;margin:0 0 16px;line-height:1.2}
+.note dl{display:grid;margin:0;font-size:14px}
+.note dl div{display:grid;grid-template-columns:120px minmax(0,1fr);gap:4px 24px;padding-block:12px;border-bottom:1px solid var(--line);min-width:0}
+.note dl div:first-child{padding-top:0}
+.note dl div:last-child{border-bottom:0}
+.note dd{max-width:75ch}
+@media (max-width:620px){.note dl div{grid-template-columns:minmax(0,1fr)}}
+.note dt{font-weight:600}
+.note dd{margin:0;color:var(--muted)}
+
+/* About */
+.about{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:24px}
+.about-side{grid-column:1 / span 4;display:grid;gap:28px;align-content:start;min-width:0}
+.about .about-head{margin:0}
+.portrait{margin:0;display:grid;gap:10px;max-width:320px}
+.portrait-frame{position:relative;aspect-ratio:4/5;max-width:100%;background:var(--paper);display:grid;place-items:center;overflow:hidden}
+.portrait-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.portrait-empty{margin:0;font-size:13px;color:var(--muted);border:1px dashed var(--line);padding:8px 14px}
+.portrait figcaption{font-size:13px;color:var(--muted)}
+.about .body{grid-column:6 / -1;display:grid;gap:16px;align-content:start;max-width:58ch}
+.about .body p{margin:0;font-family:var(--serif);font-size:1.3rem;line-height:1.5}
+.about .body p.small{font-family:var(--sans);font-size:14px;color:var(--muted)}
+@media (max-width:760px){.about-side,.about .body{grid-column:1/-1}.portrait{max-width:240px}}
+
+footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 24px;padding-block:28px 40px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+footer p{margin:0}
+
+/* Viewer */
+.lb{
+  position:fixed;inset:0;z-index:50;background:var(--scrim);
+  padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) 0 env(safe-area-inset-left,0px);
+}
+.lb-inner{display:grid;grid-template-columns:minmax(0,1fr) 380px;grid-template-rows:minmax(0,1fr);height:100%}
+.lb-media{display:grid;place-items:center;padding:clamp(16px,4vw,56px);min-height:0;height:100%;box-sizing:border-box;cursor:zoom-out}
+.lb-media img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;cursor:default;view-transition-name:none}
+.lb-panel{
+  background:var(--paper);border-left:1px solid var(--line);overflow-y:auto;
+  padding:28px 28px max(28px, env(safe-area-inset-bottom, 0px));
+  display:flex;flex-direction:column;gap:22px;
+}
+.lb-bar{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.lb-count{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.ghost{background:transparent;border:0;padding:6px 0;font-size:13px;color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.ghost:hover{color:var(--ink)}
+.lb-panel h2{font-family:var(--serif);font-weight:400;font-size:2rem;line-height:1.15;margin:0}
+.facts{display:grid;grid-template-columns:84px minmax(0,1fr);gap:6px 12px;margin:0;font-size:14px}
+.facts dt{color:var(--muted)}
+.facts dd{margin:0}
+.source{margin:-8px 0 0;font-size:13px}
+.source a{color:var(--muted);text-underline-offset:3px}
+.source a:hover{color:var(--ink)}
+.lb-price{display:flex;align-items:center;gap:12px;font-size:1.25rem;font-weight:500;font-variant-numeric:tabular-nums;margin:0}
+.sizes{border:0;margin:0;padding:0;display:grid;gap:10px;min-width:0}
+.sizes legend{padding:0;margin-bottom:10px;font-size:15px;font-weight:600}
+.size-opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.opt{position:relative;display:grid;grid-template-columns:1fr auto;gap:2px 8px;padding:12px;border:1px solid var(--line);cursor:pointer;transition:border-color .2s,background .2s}
+.opt:hover{border-color:var(--muted)}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt:has(input:checked){border-color:var(--ink);background:var(--wall);box-shadow:inset 0 0 0 1px var(--ink)}
+.opt:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+.opt-name{font-weight:500}
+.opt-price{font-weight:500;font-variant-numeric:tabular-nums}
+.opt-meta{grid-column:1/-1;font-size:12.5px;color:var(--muted);line-height:1.45}
+.fine{margin:0;font-size:13px;color:var(--muted)}
+.inq{display:grid;gap:12px;border-top:1px solid var(--line);padding-top:20px}
+.inq h3{margin:0;font-size:15px;font-weight:600}
+.inq p{margin:0;color:var(--muted);font-size:13.5px}
+.inq textarea{
+  width:100%;box-sizing:border-box;min-height:104px;resize:vertical;
+  font:14px/1.5 var(--sans);color:var(--ink);background:var(--wall);
+  border:1px solid var(--line);padding:12px;
+}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{
+  font-size:14px;font-weight:500;padding:10px 16px;cursor:pointer;text-decoration:none;
+  border:1px solid var(--ink);display:inline-flex;align-items:center;
+  transition:background .2s,color .2s;
+}
+.btn.solid{background:var(--ink);color:var(--wall)}
+.btn.solid:hover{background:transparent;color:var(--ink)}
+.btn.line{background:transparent;color:var(--ink)}
+.btn.line:hover{background:var(--ink);color:var(--wall)}
+.handle{color:var(--ink);font-weight:500;user-select:all}
+.status{min-height:1.4em;color:var(--ink)!important}
+.lb-nav{display:flex;justify-content:space-between;margin-top:auto;padding-top:8px;border-top:1px solid var(--line)}
+@media (max-width:860px){
+  .lb-inner{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto;overflow-y:auto;height:100%}
+  .lb-media{height:auto;padding:16px}
+  .lb-media img{max-height:60vh}
+  .lb-panel{border-left:0;border-top:1px solid var(--line);overflow:visible;padding-inline:20px}
+}
+
+::view-transition-group(print){animation-duration:.5s;animation-timing-function:cubic-bezier(.2,.7,.2,1)}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.3s}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .hero-frame img.developing{animation:none}
+  .mat,.mat img{transition:none}
+}
+</style>
+</head>
+<body>
+<header class="wrap top">
+  <a class="name" href="#" id="siteName">Your Name</a>
+  <nav aria-label="Main">
+    <a href="#prints">Prints</a>
+    <a href="#buying">How to buy</a>
+    <a href="#about">About</a>
+    <a href="#" id="navIg" target="_blank" rel="noopener">Instagram</a>
+  </nav>
+</header>
+
+<main>
+  <section class="wrap hero" aria-label="Featured print">
+    <div class="hero-frame" id="heroFrame">
+      <button type="button" data-open="0" id="heroBtn"><img id="heroImg" data-img="0" alt=""></button>
+    </div>
+    <div class="label" id="heroLabel"></div>
+    <p class="intro">Photographs for what words can't quite say, each one printed to order on fine art paper. Choose a photograph and a size, send me a message on Instagram, and I'll take it from there.</p>
+  </section>
+
+  <section class="wrap sect" id="prints">
+    <div class="sect-head">
+      <h2>Prints</h2>
+      <p id="count"></p>
+    </div>
+    <div class="filters" id="filters" role="group" aria-label="Show prints from"></div>
+    <ul class="sheet" id="sheet"></ul>
+  </section>
+
+  <section class="wrap sect" id="buying">
+    <div class="sect-head"><h2>How to buy</h2><p>Usually two to three weeks from your message to your door.</p></div>
+    <ol class="journey">
+      <li><span class="when">Today</span><span class="mark" aria-hidden="true"><i></i></span><h3>Send a message</h3><p>Choose a photograph and a size, press Inquire, and send me the ready-made message on Instagram.</p></li>
+      <li><span class="when">Once I reply</span><span class="mark" aria-hidden="true"><i></i></span><h3>Confirm and pay</h3><p>I'll confirm your order, shipping address and total. You pay by Interac e-Transfer.</p></li>
+      <li><span class="when">Within 5–7 business days</span><span class="mark" aria-hidden="true"><i></i></span><h3>Printed and shipped</h3><p>I print your photograph, let it dry, and ship it flat with a backing board.</p></li>
+      <li><span class="when">2–9 business days later</span><span class="mark" aria-hidden="true"><i></i></span><h3>At your door</h3><p>Delivery anywhere in Canada is included in the price.</p></li>
+    </ol>
+    <aside class="note" aria-labelledby="fineHead">
+      <h3 id="fineHead">The fine print</h3>
+      <dl>
+        <div><dt>Shipping</dt><dd>Within Canada only, included in the price.</dd></div>
+        <div><dt>Payment</dt><dd>By Interac e-Transfer only. Prices are listed before tax; applicable tax is added to your total. Your print goes into production once payment arrives.</dd></div>
+        <div><dt>Sales</dt><dd>All sales are final. Every print is made to order, so I can't accept returns or exchanges.</dd></div>
+        <div><dt>Colour</dt><dd>A print may look slightly different from your screen. Screens give off light while paper reflects it, so colour and brightness depend on your display and the room the print hangs in.</dd></div>
+        <div><dt>Damage</dt><dd>If your print arrives damaged, send me a photo within 7 days of delivery and I'll reprint it at no cost.</dd></div>
+        <div><dt>Giving</dt><dd>10% of every purchase goes to charities and non-profit causes.</dd></div>
+      </dl>
+    </aside>
+  </section>
+
+  <section class="wrap sect about" id="about">
+    <div class="about-side">
+      <div class="sect-head about-head"><h2>About</h2></div>
+      <figure class="portrait" id="portrait">
+        <div class="portrait-frame">
+          <img id="portraitImg" alt="" hidden>
+          <p class="portrait-empty" id="portraitEmpty">Artist portrait</p>
+        </div>
+        <figcaption id="portraitCap"></figcaption>
+      </figure>
+    </div>
+    <div class="body">
+      <p>Photography for me is more than just capturing images; it's a journey into the art of seeing and understanding the world beyond words. I realize that language often falls short of expressing the depth of what we experience visually.</p>
+      <p>Photography offers a unique way to bridge that gap, allowing us to explore the unknown and share perspectives that transcend cultural and linguistic barriers. Through my work, I aim to contribute to this universal connection, using the power of imagery to bring people closer to themselves and others.</p>
+      <p class="small">Prints are made on fine art matte paper with a white border for framing, and ship flat and unframed. A care card comes with every print, and 10% of every purchase goes to charities and non-profit causes.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p>© 2026 <span id="footName">Your Name</span>. All photographs are copyrighted.</p>
+  <p>Instagram <span class="handle" id="footHandle"></span><span id="footFlickr" hidden> · <a id="footFlickrLink" target="_blank" rel="noopener">Photos on Flickr</a></span></p>
+</footer>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-labelledby="lbTitle">
+  <div class="lb-inner">
+    <div class="lb-media" id="lbMedia"><img id="lbImg" alt=""></div>
+    <aside class="lb-panel">
+      <div class="lb-bar">
+        <span class="lb-count" id="lbCount"></span>
+        <button type="button" class="ghost" id="lbClose">Close</button>
+      </div>
+      <h2 id="lbTitle"></h2>
+      <dl class="facts" id="lbFacts"></dl>
+      <p class="source" id="lbSource" hidden><a id="lbFlickr" target="_blank" rel="noopener">View on Flickr</a></p>
+      <fieldset class="sizes">
+        <legend>Choose a size</legend>
+        <div class="size-opts" id="sizeOpts"></div>
+        <p class="fine" id="lbFine"></p>
+      </fieldset>
+      <div class="inq" id="inq">
+        <h3>Order this print</h3>
+        <p>Instagram can't pre-fill a message from a website, so copy this one, then paste it into a message to <span class="handle" id="lbHandle"></span>. Feel free to edit it first.</p>
+        <label class="sr" for="msg">Your message</label>
+        <textarea id="msg" rows="4"></textarea>
+        <div class="actions">
+          <button type="button" class="btn solid" id="copyBtn">Copy message</button>
+          <a class="btn line" id="igBtn" target="_blank" rel="noopener">Open Instagram</a>
+        </div>
+        <p class="status" id="status" aria-live="polite"></p>
+      </div>
+      <nav class="lb-nav" aria-label="Browse prints">
+        <button type="button" class="ghost" id="prevBtn">Previous</button>
+        <button type="button" class="ghost" id="nextBtn">Next</button>
+      </nav>
+    </aside>
+  </div>
+</div>
+
+<script>
+/* ---------- Edit these ---------- */
+const SITE = { name: "Your Name", instagram: "mshootsphotos", flickr: "", currency: "CA$" };
+/* flickr: your Flickr profile address, e.g. "https://www.flickr.com/photos/yourname/". Leave empty to hide the footer link. */
+/* Your own photo for the About section: a Flickr image address or a file in photos/. Portrait shape (4:5) works best. */
+const PORTRAIT = { src: "", alt: "Portrait of the artist" };
+const MEDIUM = "Inkjet print on fine art matte paper";
+const SHIPPING = "Shipping within Canada included";
+const TURNAROUND = "Printed and shipped within 5–7 business days";
+/* Every photo comes in these sizes. Prices are placeholders. The image is printed with a white border (margin, in inches). */
+const SIZES = [
+  { id:"letter", name:"Letter", paper:[8.5,11], margin:.5,  price:125 },
+  { id:"large",  name:"Large",  paper:[13,19],  margin:.5,  price:195 },
+];
+
+/* Placeholder prints. For each real photo add:
+     src:    the Flickr direct image address (https://live.staticflickr.com/..._k.jpg)
+     flickr: the photo's Flickr page (https://www.flickr.com/photos/.../12345/)
+     series: optional group name, e.g. "Coast". Prints with a series get filters above the grid.
+   The grid follows this order, so put your favourites first. The large photo at the top is
+   picked at random from the landscape-shaped prints on each visit.
+   Until a print has src, a placeholder image is painted. */
+const PRINTS = [
+  { title:"Harbour Fog", series:"Coast", year:2024, place:"North shore, March", ratio:[3,2],
+    alt:"Fog over a still harbour, a pale sun above a low line of hills",
+    scene:{seed:11,horizon:.58,sky:["#aeb8bd","#dfe2df"],sun:{x:.62,y:.36,r:.022,c:"#f7f3ea"},water:"#8f9a9c",layers:["#a9b2b3","#8c9697"],amp:[.03,.05],freq:3,fog:.5} },
+  { title:"Low Tide, Morning", series:"Coast", year:2025, place:"East coast, August", ratio:[4,5],
+    alt:"Wet sand at low tide reflecting a peach-coloured dawn sky",
+    scene:{seed:23,horizon:.62,sky:["#c7cfd6","#efd8c4"],sun:{x:.32,y:.55,r:.03,c:"#fff1e0"},water:"#9c8f88",layers:["#7d7f86"],amp:[.025],freq:2,fog:.2} },
+  { title:"The Long Field", series:"Land", year:2023, place:"Prairie road, September", ratio:[3,2],
+    alt:"A golden field running to distant blue hills under a wide sky",
+    scene:{seed:5,horizon:.55,sky:["#9fb6c9","#efe6cf"],layers:["#a7aea0","#8a8c63","#b49a52","#9a7f3b"],amp:[.04,.05,.03,.02],freq:2.5,fog:.35} },
+  { title:"First Snow", series:"Winter", year:2025, place:"Highlands, November", ratio:[4,5],
+    alt:"Layered snowy ridges fading into a pale winter sky",
+    scene:{seed:41,horizon:.48,sky:["#b9c6d1","#e9edf0"],layers:["#c8d0d6","#8e9aa4","#5b6670","#eef1f3"],amp:[.12,.1,.05,.03],freq:3,fog:.45} },
+  { title:"Salt Flats", series:"Land", year:2024, place:"Desert basin, May", ratio:[2,1],
+    alt:"A mirror-flat salt pan reflecting a pink evening sky",
+    scene:{seed:7,horizon:.5,sky:["#c9c3d3","#f1dcd2"],sun:{x:.5,y:.44,r:.018,c:"#fff4ec"},water:"#e2cfca",layers:["#b7a9b6"],amp:[.02],freq:4,fog:.3} },
+  { title:"After Rain", series:"Land", year:2025, place:"River valley, June", ratio:[1,1],
+    alt:"Dark green hills under a soft grey sky after a storm",
+    scene:{seed:19,horizon:.5,sky:["#8e9a96","#cfd5cd"],layers:["#9aa59c","#74836f","#4f5e4d","#3a4638"],amp:[.08,.09,.07,.05],freq:2.2,fog:.4} },
+  { title:"Night Swim", series:"Night", year:2023, place:"Lake, July", ratio:[4,5],
+    alt:"A moon over a dark lake at the end of a summer evening",
+    scene:{seed:31,horizon:.55,sky:["#1d2a3e","#5b6b84"],sun:{x:.7,y:.24,r:.02,c:"#e9ecf2"},water:"#141d2b",layers:["#2b3647"],amp:[.04],freq:3,fog:.15} },
+];
+/* PLACEHOLDER ONLY: pads the collection with sample prints to preview a full catalogue.
+   Set DEMO_FILL to 0 (or delete this block) when adding real photos. */
+const DEMO_FILL = 30;
+(function(){
+  const names=["Breakwater","Slack Water","Cedar Point","Morning Ferry","Fallow","Hayline","Windbreak","The Back Forty",
+    "Drift Ice","Hoarfrost","White Pine","Thaw","Blue Hour","Last Bus","Porch Light","Harbour Lights","Shoal","Tidewrack",
+    "Stubble Field","Ridge Road","Whiteout","Lake Effect","Moonset"];
+  const series=["Coast","Coast","Coast","Coast","Land","Land","Land","Land","Winter","Winter","Winter","Winter","Night","Night","Night","Night",
+    "Coast","Coast","Land","Land","Winter","Winter","Night"];
+  const ratios=[[3,2],[4,5],[3,2],[1,1],[3,2],[2,1],[4,5],[3,2]];
+  let k=0;
+  while(PRINTS.length<DEMO_FILL&&k<names.length){
+    const base=PRINTS[k%7];
+    const pool=PRINTS.slice(0,7).filter(p=>p.series===series[k]);
+    const src=(pool.length?pool[k%pool.length]:base);
+    PRINTS.push({title:names[k],series:series[k],year:2023+(k%3),place:src.place,ratio:ratios[k%ratios.length],
+      alt:src.alt,small:true,scene:{...src.scene,seed:src.scene.seed+101+k*7}});
+    k++;
+  }
+})();
+
+/* ---------- Helpers ---------- */
+const $ = s => document.querySelector(s);
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const money = n => SITE.currency + n.toLocaleString("en-US");
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const q = n => String(Math.round(n*10)/10);
+const paperText = sz => `${sz.paper[0]} × ${sz.paper[1]} in`;
+function imageText(p, sz){
+  const [rw,rh]=p.ratio; let [pw,ph]=sz.paper; if(rw>rh)[pw,ph]=[ph,pw];
+  const aw=pw-2*sz.margin, ah=ph-2*sz.margin;
+  let w=aw, h=aw*rh/rw; if(h>ah){h=ah; w=ah*rw/rh}
+  return `${q(w)} × ${q(h)} in`;
+}
+const tone = p => p.scene ? p.scene.sky[1] : "var(--paper)";
+const priceOf = (p, sz) => (p.prices && p.prices[sz.id]) || sz.price;
+const fromPrice = p => Math.min(...SIZES.map(sz => priceOf(p, sz)));
+const igProfile = `https://www.instagram.com/${SITE.instagram}/`;
+const igDM = `https://ig.me/m/${SITE.instagram}`;
+
+function labelHTML(p, i){
+  return `
+    <p class="t"><em>${esc(p.title)}</em>, ${p.year}</p>
+    <p>${esc(p.place)}</p>
+    <p>${MEDIUM}</p>
+    <p>${SIZES.map(sz => `${sz.name} (${paperText(sz)})`).join(" or ")}</p>
+    <div class="buy">
+      <span class="price">From ${money(fromPrice(p))} <span class="tax">plus tax</span></span>
+      <button type="button" class="inquire" data-open="${i}" data-inquire>Inquire</button>
+    </div>`;
+}
+
+/* ---------- Placeholder painter: soft landscapes with film grain ---------- */
+function rng(seed){let a=seed>>>0;return()=>{a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function noise(r){const N=64,v=Array.from({length:N},()=>r());v.push(v[0]);return x=>{x=((x%N)+N)%N;const i=Math.floor(x),f=x-i,u=f*f*(3-2*f);return v[i]*(1-u)+v[i+1]*u}}
+function rgb(h){const n=parseInt(h.slice(1),16);return[n>>16&255,n>>8&255,n&255]}
+function rgba(h,a){const[r,g,b]=rgb(h);return`rgba(${r},${g},${b},${a})`}
+
+function paint(p){
+  const s=p.scene,[rw,rh]=p.ratio,L=p.small?900:1500;
+  const W=rw>=rh?L:Math.round(L*rw/rh), H=rw>=rh?Math.round(L*rh/rw):L;
+  const c=document.createElement("canvas");c.width=W;c.height=H;
+  const g=c.getContext("2d"), r=rng(s.seed), hy=H*s.horizon;
+
+  let gr=g.createLinearGradient(0,0,0,hy);
+  gr.addColorStop(0,s.sky[0]);gr.addColorStop(1,s.sky[1]);
+  g.fillStyle=gr;g.fillRect(0,0,W,hy+2);
+
+  let sx,sy,sr;
+  if(s.sun){
+    sx=s.sun.x*W;sy=s.sun.y*H;sr=s.sun.r*Math.max(W,H);
+    const gl=g.createRadialGradient(sx,sy,0,sx,sy,sr*10);
+    gl.addColorStop(0,rgba(s.sun.c,.55));gl.addColorStop(1,rgba(s.sun.c,0));
+    g.fillStyle=gl;g.fillRect(0,0,W,hy);
+    g.fillStyle=s.sun.c;g.beginPath();g.arc(sx,sy,sr,0,Math.PI*2);g.fill();
+  }
+
+  if(s.water){
+    const wg=g.createLinearGradient(0,hy,0,H);
+    wg.addColorStop(0,s.sky[1]);wg.addColorStop(1,s.water);
+    g.fillStyle=wg;g.fillRect(0,hy,W,H-hy);
+    if(s.sun){
+      for(let y=hy;y<H;y+=2){
+        const t=(y-hy)/(H-hy),w=sr*(1.5+r()*5)*(1+t*3);
+        g.fillStyle=rgba(s.sun.c,.32*(1-t)*r());
+        g.fillRect(sx-w/2+(r()-.5)*sr*2,y,w,1.4);
+      }
+    }
+    for(let i=0;i<H*.5;i++){
+      const y=hy+Math.pow(r(),1.6)*(H-hy);
+      g.fillStyle=r()<.5?"rgba(255,255,255,.05)":"rgba(0,0,0,.05)";
+      g.fillRect(r()*W,y,20+r()*W*.15,1);
+    }
+  }
+
+  s.layers.forEach((col,k)=>{
+    const n=noise(r),n2=noise(r),amp=s.amp[k]*H,freq=s.freq*(1+k*.6);
+    const base=s.water?hy:hy+(H-hy)*(k/s.layers.length)*.9;
+    const ridge=x=>{const t=x/W*freq;return base-amp*(n(t)*.65+n2(t*2.7)*.25+n(t*6.1)*.1)};
+    g.beginPath();g.moveTo(0,ridge(0));
+    for(let x=4;x<=W+4;x+=4)g.lineTo(x,ridge(x));
+    if(s.water){g.lineTo(W,hy+1);g.lineTo(0,hy+1)}else{g.lineTo(W,H);g.lineTo(0,H)}
+    g.closePath();g.fillStyle=col;g.fill();
+    if(s.water){ // faint reflection of the land
+      g.beginPath();g.moveTo(0,hy);
+      for(let x=0;x<=W+4;x+=4)g.lineTo(x,2*hy-ridge(x));
+      g.lineTo(W,hy);g.closePath();g.fillStyle=rgba(col,.3);g.fill();
+    }
+    if(s.fog&&k<s.layers.length-1){
+      const top=base-amp,bot=s.water?hy:base+(H-hy)*.3;
+      const fg=g.createLinearGradient(0,top,0,bot);
+      fg.addColorStop(0,rgba(s.sky[1],0));fg.addColorStop(1,rgba(s.sky[1],s.fog));
+      g.fillStyle=fg;g.fillRect(0,top,W,(s.water?hy:H)-top);
+    }
+  });
+
+  const id=g.getImageData(0,0,W,H),d=id.data,cx=W/2,cy=H/2,m2=cx*cx+cy*cy;
+  for(let y=0;y<H;y++){
+    const dy=(y-cy)*(y-cy);
+    for(let x=0;x<W;x++){
+      const i=(y*W+x)*4,v=1-.2*Math.pow(((x-cx)*(x-cx)+dy)/m2,1.1),nz=(r()-.5)*16;
+      d[i]=d[i]*v+nz;d[i+1]=d[i+1]*v+nz;d[i+2]=d[i+2]*v+nz;
+    }
+  }
+  g.putImageData(id,0,0);
+  return c.toDataURL("image/jpeg",.88);
+}
+
+/* ---------- Render page ---------- */
+$("#siteName").textContent=SITE.name;
+$("#footName").textContent=SITE.name;
+$("#footHandle").textContent="@"+SITE.instagram;
+if(SITE.flickr){$("#footFlickrLink").href=SITE.flickr;$("#footFlickr").hidden=false}
+$("#portraitCap").textContent=SITE.name;
+if(PORTRAIT.src){
+  const im=$("#portraitImg");
+  im.alt=PORTRAIT.alt;im.src=PORTRAIT.src;im.hidden=false;$("#portraitEmpty").hidden=true;
+}
+$("#navIg").href=igProfile;
+
+/* Featured photo: a different landscape-shaped print on each visit (portrait photos would be cropped in the wide frame). */
+const heroIdx=(()=>{
+  let pool=PRINTS.map((p,i)=>i).filter(i=>PRINTS[i].ratio[0]>PRINTS[i].ratio[1]);
+  if(!pool.length)pool=PRINTS.map((p,i)=>i);
+  let last=null;
+  try{last=localStorage.getItem("lastHero")}catch(e){}
+  if(pool.length>1)pool=pool.filter(i=>PRINTS[i].title!==last);
+  const pick=pool[Math.floor(Math.random()*pool.length)];
+  try{localStorage.setItem("lastHero",PRINTS[pick].title)}catch(e){}
+  return pick;
+})();
+const hero=PRINTS[heroIdx];
+$("#heroImg").alt=hero.alt;
+$("#heroImg").dataset.img=heroIdx;
+$("#heroBtn").dataset.open=heroIdx;
+$("#heroLabel").innerHTML=labelHTML(hero,heroIdx);
+$("#heroFrame").style.background=tone(hero);
+
+$("#count").textContent=`${PRINTS.length} photographs, each printed to order`;
+
+
+/* Prints: a grid of every print, with optional series filters */
+$("#sheet").innerHTML=PRINTS.map((p,i)=>`
+  <li class="cell" data-series="${esc(p.series||"")}">
+    <button type="button" class="mat" data-open="${i}" aria-label="View ${esc(p.title)}">
+      <img alt="${esc(p.alt)}" data-img="${i}" loading="lazy" decoding="async">
+    </button>
+    <p class="cap"><em>${esc(p.title)}</em><span>From ${money(fromPrice(p))}</span></p>
+  </li>`).join("");
+
+const seriesList=[...new Set(PRINTS.map(p=>p.series).filter(Boolean))];
+let filter="";
+function renderFilters(){
+  if(!seriesList.length){$("#filters").hidden=true;return}
+  const opts=[["","All",PRINTS.length],...seriesList.map(n=>[n,n,PRINTS.filter(p=>p.series===n).length])];
+  $("#filters").innerHTML=opts.map(([v,label,n])=>
+    `<button type="button" data-filter="${esc(v)}" aria-pressed="${v===filter}">${esc(label)} <span>${n}</span></button>`).join("");
+}
+function applyFilter(v){
+  filter=v;
+  document.querySelectorAll("#sheet .cell").forEach(c=>{c.hidden=!!filter&&c.dataset.series!==filter});
+  renderFilters();
+}
+$("#filters").addEventListener("click",e=>{
+  const b=e.target.closest("[data-filter]");if(!b)return;
+  vt(()=>applyFilter(b.dataset.filter));
+});
+renderFilters();
+
+const SRC=[];
+function setSrc(i,src){
+  SRC[i]=src;
+  document.querySelectorAll(`[data-img="${i}"]`).forEach(img=>{
+    if(img.id==="heroImg")img.onload=()=>{if(!reduce)img.classList.add("developing")};
+    img.src=src;
+  });
+  if(!lb.hidden&&cur===i)$("#lbImg").src=src;
+}
+const ORDER=[heroIdx,...PRINTS.map((p,i)=>i).filter(i=>i!==heroIdx)];
+function paintAll(k=0){
+  if(k>=ORDER.length)return;
+  const i=ORDER[k],p=PRINTS[i];
+  setSrc(i,p.src||paint(p));
+  setTimeout(()=>paintAll(k+1),0);
+}
+
+/* ---------- Viewer ---------- */
+const lb=$("#lb");
+let cur=0,trigger=null,origin=document,nav=[],sizeId=SIZES[0].id;
+
+function writeMsg(){
+  const p=PRINTS[cur], sz=SIZES.find(z=>z.id===sizeId);
+  $("#msg").value=`Hi! I'd like to order "${p.title}" in the ${sz.name} size (${paperText(sz)}) for ${money(priceOf(p,sz))} plus tax. Could you send me the details?`;
+  $("#status").textContent="";
+}
+function fill(i){
+  cur=i;const p=PRINTS[i];
+  $("#lbImg").src=SRC[i]||"";$("#lbImg").alt=p.alt;
+  $("#lbTitle").innerHTML=`<em>${esc(p.title)}</em>`;
+  $("#lbCount").textContent=`${nav.indexOf(i)+1} of ${nav.length}`;
+  $("#lbFacts").innerHTML=`
+    <dt>Year</dt><dd>${p.year}</dd>
+    <dt>Place</dt><dd>${esc(p.place)}</dd>
+    <dt>Print</dt><dd>${MEDIUM}</dd>
+    <dt>Edition</dt><dd>Open edition, printed to order</dd>
+    <dt>Ships</dt><dd>Within 5–7 business days, anywhere in Canada</dd>`;
+  $("#lbSource").hidden=!p.flickr;
+  if(p.flickr)$("#lbFlickr").href=p.flickr;
+  $("#sizeOpts").innerHTML=SIZES.map(sz=>`
+    <label class="opt" for="size-${sz.id}">
+      <input type="radio" name="size" id="size-${sz.id}" value="${sz.id}" ${sz.id===sizeId?"checked":""}>
+      <span class="opt-name">${sz.name}</span>
+      <span class="opt-price">${money(priceOf(p,sz))}</span>
+      <span class="opt-meta">${paperText(sz)}</span>
+    </label>`).join("");
+  writeMsg();
+}
+document.addEventListener("change",e=>{
+  if(e.target.name==="size"){sizeId=e.target.value;writeMsg()}
+});
+
+function vt(fn){
+  if(document.startViewTransition&&!reduce)return document.startViewTransition(fn);
+  fn();return null;
+}
+function thumbImg(i){
+  const el=origin.querySelector(`[data-img="${i}"]`);
+  return el&&el.offsetParent!==null?el:null;
+}
+
+function openViewer(i,focusMsg,from){
+  trigger=from||null;
+  origin=(from&&from.closest("#sheet"))||document;
+  nav=origin===document?PRINTS.map((_,k)=>k)
+    :[...origin.querySelectorAll(".cell:not([hidden]) [data-open]")].map(b=>+b.dataset.open);
+  const t=thumbImg(i),big=$("#lbImg");
+  if(t)t.style.viewTransitionName="print";
+  const tr=vt(()=>{
+    if(t)t.style.viewTransitionName="";
+    fill(i);lb.hidden=false;big.style.viewTransitionName="print";
+    document.documentElement.style.overflow="hidden";
+  });
+  const after=()=>{(focusMsg?$("#msg"):$("#lbClose")).focus({preventScroll:true})};
+  tr?tr.finished.then(after):after();
+}
+function closeViewer(){
+  const t=thumbImg(cur),big=$("#lbImg");
+  const tr=vt(()=>{
+    big.style.viewTransitionName="";
+    if(t)t.style.viewTransitionName="print";
+    lb.hidden=true;document.documentElement.style.overflow="";
+  });
+  const after=()=>{if(t)t.style.viewTransitionName="";if(trigger)trigger.focus({preventScroll:true})};
+  tr?tr.finished.then(after):after();
+}
+function step(d){
+  const k=nav.indexOf(cur),n=nav[(k+d+nav.length)%nav.length];
+  vt(()=>fill(n));
+}
+
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-open]");
+  if(b&&lb.hidden){openViewer(+b.dataset.open,b.hasAttribute("data-inquire"),b);}
+});
+$("#lbClose").onclick=closeViewer;
+$("#lbMedia").onclick=e=>{if(e.target.id==="lbMedia")closeViewer()};
+$("#prevBtn").onclick=()=>step(-1);
+$("#nextBtn").onclick=()=>step(1);
+document.addEventListener("keydown",e=>{
+  if(lb.hidden)return;
+  if(e.key==="Escape"){e.preventDefault();closeViewer();return}
+  if(e.target.id!=="msg"){
+    if(e.key==="ArrowRight")step(1);
+    if(e.key==="ArrowLeft")step(-1);
+  }
+  if(e.key==="Tab"){ // keep focus inside the viewer
+    const f=[...lb.querySelectorAll("button,a[href],textarea")].filter(el=>el.offsetParent!==null);
+    const first=f[0],last=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
+  }
+});
+
+$("#lbHandle").textContent="@"+SITE.instagram;
+$("#lbFine").textContent=`Prices plus tax. ${SHIPPING}. All sales are final. 10% of every purchase goes to charities and non-profit causes.`;
+$("#igBtn").href=igDM;
+$("#copyBtn").onclick=()=>{
+  const st=$("#status"),h="@"+SITE.instagram;
+  const done=()=>{st.textContent=`Copied. Paste it into a message to ${h}.`};
+  const fallback=()=>{const m=$("#msg");m.focus();m.select();st.textContent=`Press Ctrl+C (or ⌘C on a Mac) to copy, then paste it into a message to ${h}.`};
+  try{navigator.clipboard.writeText($("#msg").value).then(done,fallback)}catch(err){fallback()}
+};
+
+paintAll();
+</script>
+
+</body>
+</html>

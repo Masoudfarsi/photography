@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Print Room</title>
+<title>Masoud F. Photography</title>
 <meta name="description" content="Fine art photographs, printed to order. Shipping within Canada.">
 <!-- Remove the next line at launch so search engines can list the site. -->
 <meta name="robots" content="noindex, nofollow">
@@ -106,11 +106,6 @@ button{font:inherit;color:inherit}
 
 
 /* All prints: contact sheet */
-.filters{display:flex;flex-wrap:wrap;gap:4px 20px;margin:calc(-1 * clamp(16px,3vw,36px)) 0 clamp(28px,4vw,40px)}
-.filters button{background:none;border:0;padding:4px 0;font-size:14px;color:var(--muted);cursor:pointer;text-underline-offset:5px}
-.filters button span{font-size:12px;font-variant-numeric:tabular-nums;margin-left:2px}
-.filters button:hover{color:var(--ink)}
-.filters button[aria-pressed="true"]{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px}
 .sheet{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:40px 24px}
 .cell{min-width:0;display:grid;gap:10px;align-content:start}
 .cell{position:relative}
@@ -177,7 +172,7 @@ button{font:inherit;color:inherit}
 .about-side{grid-column:1 / span 4;display:grid;gap:28px;align-content:start;min-width:0}
 .about .about-head{margin:0}
 .portrait{margin:0;display:grid;gap:10px;max-width:320px}
-.portrait-frame{position:relative;aspect-ratio:4/5;max-width:100%;background:var(--paper);display:grid;place-items:center;overflow:hidden}
+.portrait-frame{position:relative;aspect-ratio:1/1;max-width:100%;background:var(--paper);display:grid;place-items:center;overflow:hidden}
 .portrait-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .portrait-empty{margin:0;font-size:13px;color:var(--muted);border:1px dashed var(--line);padding:8px 14px}
 .portrait figcaption{font-size:13px;color:var(--muted)}
@@ -266,7 +261,7 @@ footer p{margin:0}
 </head>
 <body>
 <header class="wrap top">
-  <a class="name" href="#" id="siteName">Your Name</a>
+  <a class="name" href="#" id="siteName">Masoud F. Photography</a>
   <nav aria-label="Main">
     <a href="#prints">Prints</a>
     <a href="#buying">How to buy</a>
@@ -289,7 +284,6 @@ footer p{margin:0}
       <h2>Prints</h2>
       <p id="count"></p>
     </div>
-    <div class="filters" id="filters" role="group" aria-label="Show prints from"></div>
     <ul class="sheet" id="sheet"></ul>
   </section>
 
@@ -334,7 +328,7 @@ footer p{margin:0}
 </main>
 
 <footer class="wrap">
-  <p>© 2026 <span id="footName">Your Name</span>. All photographs are copyrighted.</p>
+  <p>© 2026 <span id="footName">Masoud F. Photography</span>. All photographs are copyrighted.</p>
   <p>Instagram <span class="handle" id="footHandle"></span><span id="footFlickr" hidden> · <a id="footFlickrLink" target="_blank" rel="noopener">Photos on Flickr</a></span></p>
 </footer>
 
@@ -375,26 +369,33 @@ footer p{margin:0}
 
 <script>
 /* ---------- Edit these ---------- */
-const SITE = { name: "Your Name", instagram: "mshootsphotos", flickr: "", currency: "CA$" };
-/* flickr: your Flickr profile address, e.g. "https://www.flickr.com/photos/yourname/". Leave empty to hide the footer link. */
-/* Your own photo for the About section: a Flickr image address or a file in photos/. Portrait shape (4:5) works best. */
-const PORTRAIT = { src: "", alt: "Portrait of the artist" };
+const SITE = { name: "Masoud F. Photography", artist: "Masoud F.", instagram: "mshootsphotos", flickr: "", currency: "CA$" };
+/* name: header, footer and browser tab. artist: caption under the About portrait.
+   flickr: your Flickr profile address, e.g. "https://www.flickr.com/photos/yourname/". Leave empty to hide the footer link. */
+/* Your own photo for the About section: a Flickr image address or a file in photos/. Shown in a square frame. */
+const PORTRAIT = { src: "photos/portrait.jpg", alt: "Portrait of the artist outdoors, with pine trees and mountains behind" };
 const MEDIUM = "Inkjet print on fine art matte paper";
 const SHIPPING = "Shipping within Canada included";
 const TURNAROUND = "Printed and shipped within 5–7 business days";
-/* Every photo comes in these sizes. Prices are placeholders. The image is printed with a white border (margin, in inches). */
+/* Every photo comes in these sizes. Prices are before tax. The image is printed with a white border (margin, in inches). */
 const SIZES = [
   { id:"letter", name:"Letter", paper:[8.5,11], margin:.5,  price:125 },
   { id:"large",  name:"Large",  paper:[13,19],  margin:.5,  price:195 },
 ];
 
-/* Placeholder prints. For each real photo add:
-     src:    the Flickr direct image address (https://live.staticflickr.com/..._k.jpg)
-     flickr: the photo's Flickr page (https://www.flickr.com/photos/.../12345/)
-     series: optional group name, e.g. "Coast". Prints with a series get filters above the grid.
+/* Prints. To add a photo, copy this template into the list and fill it in:
+  { title:"", year:2024, place:"City, Month", ratio:[2048,1365],
+    src:"https://live.staticflickr.com/65535/..._k.jpg",
+    flickr:"https://www.flickr.com/photos/204847343@N07/.../",
+    alt:"" },
+     title, year, place: shown on the label and in the viewer
+     ratio:  the image's width and height in pixels (or simply [3,2], [4,5], [1,1]...)
+     src:    the Flickr direct image address, 2048 px (Share > Embed, the ..._k.jpg address).
+             The photo must be public on Flickr.
+     flickr: the photo's Flickr page. Required by Flickr's terms; shown as "View on Flickr".
+     alt:    a one-line description for screen readers
    The grid follows this order, so put your favourites first. The large photo at the top is
-   picked at random from the landscape-shaped prints on each visit.
-   Until a print has src, a placeholder image is painted. */
+   picked at random from the landscape-shaped prints on each visit. */
 const PRINTS = [
   { title:"Thicket", year:2024, place:"Los Angeles, September", ratio:[2048,1583],
     src:"https://live.staticflickr.com/65535/55450702612_5012cc86b4_k.jpg",
@@ -416,49 +417,7 @@ const PRINTS = [
     src:"https://live.staticflickr.com/65535/55451883734_781d704116_k.jpg",
     flickr:"https://www.flickr.com/photos/204847343@N07/55451883734/",
     alt:"A downtown street at night with cable cars stopped at an intersection, storefronts and signs lit down the block" },
-  { title:"Harbour Fog", series:"Coast", year:2024, place:"North shore, March", ratio:[3,2],
-    alt:"Fog over a still harbour, a pale sun above a low line of hills",
-    scene:{seed:11,horizon:.58,sky:["#aeb8bd","#dfe2df"],sun:{x:.62,y:.36,r:.022,c:"#f7f3ea"},water:"#8f9a9c",layers:["#a9b2b3","#8c9697"],amp:[.03,.05],freq:3,fog:.5} },
-  { title:"Low Tide, Morning", series:"Coast", year:2025, place:"East coast, August", ratio:[4,5],
-    alt:"Wet sand at low tide reflecting a peach-coloured dawn sky",
-    scene:{seed:23,horizon:.62,sky:["#c7cfd6","#efd8c4"],sun:{x:.32,y:.55,r:.03,c:"#fff1e0"},water:"#9c8f88",layers:["#7d7f86"],amp:[.025],freq:2,fog:.2} },
-  { title:"The Long Field", series:"Land", year:2023, place:"Prairie road, September", ratio:[3,2],
-    alt:"A golden field running to distant blue hills under a wide sky",
-    scene:{seed:5,horizon:.55,sky:["#9fb6c9","#efe6cf"],layers:["#a7aea0","#8a8c63","#b49a52","#9a7f3b"],amp:[.04,.05,.03,.02],freq:2.5,fog:.35} },
-  { title:"First Snow", series:"Winter", year:2025, place:"Highlands, November", ratio:[4,5],
-    alt:"Layered snowy ridges fading into a pale winter sky",
-    scene:{seed:41,horizon:.48,sky:["#b9c6d1","#e9edf0"],layers:["#c8d0d6","#8e9aa4","#5b6670","#eef1f3"],amp:[.12,.1,.05,.03],freq:3,fog:.45} },
-  { title:"Salt Flats", series:"Land", year:2024, place:"Desert basin, May", ratio:[2,1],
-    alt:"A mirror-flat salt pan reflecting a pink evening sky",
-    scene:{seed:7,horizon:.5,sky:["#c9c3d3","#f1dcd2"],sun:{x:.5,y:.44,r:.018,c:"#fff4ec"},water:"#e2cfca",layers:["#b7a9b6"],amp:[.02],freq:4,fog:.3} },
-  { title:"After Rain", series:"Land", year:2025, place:"River valley, June", ratio:[1,1],
-    alt:"Dark green hills under a soft grey sky after a storm",
-    scene:{seed:19,horizon:.5,sky:["#8e9a96","#cfd5cd"],layers:["#9aa59c","#74836f","#4f5e4d","#3a4638"],amp:[.08,.09,.07,.05],freq:2.2,fog:.4} },
-  { title:"Night Swim", series:"Night", year:2023, place:"Lake, July", ratio:[4,5],
-    alt:"A moon over a dark lake at the end of a summer evening",
-    scene:{seed:31,horizon:.55,sky:["#1d2a3e","#5b6b84"],sun:{x:.7,y:.24,r:.02,c:"#e9ecf2"},water:"#141d2b",layers:["#2b3647"],amp:[.04],freq:3,fog:.15} },
 ];
-/* PLACEHOLDER ONLY: pads the collection with sample prints to preview a full catalogue.
-   Set DEMO_FILL to 0 (or delete this block) when adding real photos. */
-const DEMO_FILL = 30;
-(function(){
-  const names=["Breakwater","Slack Water","Cedar Point","Morning Ferry","Fallow","Hayline","Windbreak","The Back Forty",
-    "Drift Ice","Hoarfrost","White Pine","Thaw","Blue Hour","Last Bus","Porch Light","Harbour Lights","Shoal","Tidewrack",
-    "Stubble Field","Ridge Road","Whiteout","Lake Effect","Moonset"];
-  const series=["Coast","Coast","Coast","Coast","Land","Land","Land","Land","Winter","Winter","Winter","Winter","Night","Night","Night","Night",
-    "Coast","Coast","Land","Land","Winter","Winter","Night"];
-  const ratios=[[3,2],[4,5],[3,2],[1,1],[3,2],[2,1],[4,5],[3,2]];
-  const demo=PRINTS.filter(p=>p.scene);
-  let k=0;
-  while(demo.length&&PRINTS.length<DEMO_FILL&&k<names.length){
-    const base=demo[k%demo.length];
-    const pool=demo.filter(p=>p.series===series[k]);
-    const src=(pool.length?pool[k%pool.length]:base);
-    PRINTS.push({title:names[k],series:series[k],year:2023+(k%3),place:src.place,ratio:ratios[k%ratios.length],
-      alt:src.alt,small:true,scene:{...src.scene,seed:src.scene.seed+101+k*7}});
-    k++;
-  }
-})();
 
 /* ---------- Helpers ---------- */
 const $ = s => document.querySelector(s);
@@ -473,7 +432,6 @@ function imageText(p, sz){
   let w=aw, h=aw*rh/rw; if(h>ah){h=ah; w=ah*rw/rh}
   return `${q(w)} × ${q(h)} in`;
 }
-const tone = p => p.scene ? p.scene.sky[1] : "var(--paper)";
 const priceOf = (p, sz) => (p.prices && p.prices[sz.id]) || sz.price;
 const fromPrice = p => Math.min(...SIZES.map(sz => priceOf(p, sz)));
 const igProfile = `https://www.instagram.com/${SITE.instagram}/`;
@@ -491,88 +449,13 @@ function labelHTML(p, i){
     </div>`;
 }
 
-/* ---------- Placeholder painter: soft landscapes with film grain ---------- */
-function rng(seed){let a=seed>>>0;return()=>{a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
-function noise(r){const N=64,v=Array.from({length:N},()=>r());v.push(v[0]);return x=>{x=((x%N)+N)%N;const i=Math.floor(x),f=x-i,u=f*f*(3-2*f);return v[i]*(1-u)+v[i+1]*u}}
-function rgb(h){const n=parseInt(h.slice(1),16);return[n>>16&255,n>>8&255,n&255]}
-function rgba(h,a){const[r,g,b]=rgb(h);return`rgba(${r},${g},${b},${a})`}
-
-function paint(p){
-  const s=p.scene,[rw,rh]=p.ratio,L=p.small?900:1500;
-  const W=rw>=rh?L:Math.round(L*rw/rh), H=rw>=rh?Math.round(L*rh/rw):L;
-  const c=document.createElement("canvas");c.width=W;c.height=H;
-  const g=c.getContext("2d"), r=rng(s.seed), hy=H*s.horizon;
-
-  let gr=g.createLinearGradient(0,0,0,hy);
-  gr.addColorStop(0,s.sky[0]);gr.addColorStop(1,s.sky[1]);
-  g.fillStyle=gr;g.fillRect(0,0,W,hy+2);
-
-  let sx,sy,sr;
-  if(s.sun){
-    sx=s.sun.x*W;sy=s.sun.y*H;sr=s.sun.r*Math.max(W,H);
-    const gl=g.createRadialGradient(sx,sy,0,sx,sy,sr*10);
-    gl.addColorStop(0,rgba(s.sun.c,.55));gl.addColorStop(1,rgba(s.sun.c,0));
-    g.fillStyle=gl;g.fillRect(0,0,W,hy);
-    g.fillStyle=s.sun.c;g.beginPath();g.arc(sx,sy,sr,0,Math.PI*2);g.fill();
-  }
-
-  if(s.water){
-    const wg=g.createLinearGradient(0,hy,0,H);
-    wg.addColorStop(0,s.sky[1]);wg.addColorStop(1,s.water);
-    g.fillStyle=wg;g.fillRect(0,hy,W,H-hy);
-    if(s.sun){
-      for(let y=hy;y<H;y+=2){
-        const t=(y-hy)/(H-hy),w=sr*(1.5+r()*5)*(1+t*3);
-        g.fillStyle=rgba(s.sun.c,.32*(1-t)*r());
-        g.fillRect(sx-w/2+(r()-.5)*sr*2,y,w,1.4);
-      }
-    }
-    for(let i=0;i<H*.5;i++){
-      const y=hy+Math.pow(r(),1.6)*(H-hy);
-      g.fillStyle=r()<.5?"rgba(255,255,255,.05)":"rgba(0,0,0,.05)";
-      g.fillRect(r()*W,y,20+r()*W*.15,1);
-    }
-  }
-
-  s.layers.forEach((col,k)=>{
-    const n=noise(r),n2=noise(r),amp=s.amp[k]*H,freq=s.freq*(1+k*.6);
-    const base=s.water?hy:hy+(H-hy)*(k/s.layers.length)*.9;
-    const ridge=x=>{const t=x/W*freq;return base-amp*(n(t)*.65+n2(t*2.7)*.25+n(t*6.1)*.1)};
-    g.beginPath();g.moveTo(0,ridge(0));
-    for(let x=4;x<=W+4;x+=4)g.lineTo(x,ridge(x));
-    if(s.water){g.lineTo(W,hy+1);g.lineTo(0,hy+1)}else{g.lineTo(W,H);g.lineTo(0,H)}
-    g.closePath();g.fillStyle=col;g.fill();
-    if(s.water){ // faint reflection of the land
-      g.beginPath();g.moveTo(0,hy);
-      for(let x=0;x<=W+4;x+=4)g.lineTo(x,2*hy-ridge(x));
-      g.lineTo(W,hy);g.closePath();g.fillStyle=rgba(col,.3);g.fill();
-    }
-    if(s.fog&&k<s.layers.length-1){
-      const top=base-amp,bot=s.water?hy:base+(H-hy)*.3;
-      const fg=g.createLinearGradient(0,top,0,bot);
-      fg.addColorStop(0,rgba(s.sky[1],0));fg.addColorStop(1,rgba(s.sky[1],s.fog));
-      g.fillStyle=fg;g.fillRect(0,top,W,(s.water?hy:H)-top);
-    }
-  });
-
-  const id=g.getImageData(0,0,W,H),d=id.data,cx=W/2,cy=H/2,m2=cx*cx+cy*cy;
-  for(let y=0;y<H;y++){
-    const dy=(y-cy)*(y-cy);
-    for(let x=0;x<W;x++){
-      const i=(y*W+x)*4,v=1-.2*Math.pow(((x-cx)*(x-cx)+dy)/m2,1.1),nz=(r()-.5)*16;
-      d[i]=d[i]*v+nz;d[i+1]=d[i+1]*v+nz;d[i+2]=d[i+2]*v+nz;
-    }
-  }
-  g.putImageData(id,0,0);
-  return c.toDataURL("image/jpeg",.88);
-}
-
 /* ---------- Render page ---------- */
+document.title=SITE.name;
 $("#siteName").textContent=SITE.name;
 $("#footName").textContent=SITE.name;
 $("#footHandle").textContent="@"+SITE.instagram;
 if(SITE.flickr){$("#footFlickrLink").href=SITE.flickr;$("#footFlickr").hidden=false}
-$("#portraitCap").textContent=SITE.name;
+$("#portraitCap").textContent=SITE.artist;
 if(PORTRAIT.src){
   const im=$("#portraitImg");
   im.alt=PORTRAIT.alt;im.src=PORTRAIT.src;im.hidden=false;$("#portraitEmpty").hidden=true;
@@ -595,38 +478,17 @@ $("#heroImg").alt=hero.alt;
 $("#heroImg").dataset.img=heroIdx;
 $("#heroBtn").dataset.open=heroIdx;
 $("#heroLabel").innerHTML=labelHTML(hero,heroIdx);
-$("#heroFrame").style.background=tone(hero);
 
 $("#count").textContent=`${PRINTS.length} photographs, each printed to order`;
 
-
-/* Prints: a grid of every print, with optional series filters */
+/* Prints: a grid of every print */
 $("#sheet").innerHTML=PRINTS.map((p,i)=>`
-  <li class="cell" data-series="${esc(p.series||"")}">
+  <li class="cell">
     <button type="button" class="mat" data-open="${i}" aria-label="View ${esc(p.title)}">
       <img alt="${esc(p.alt)}" data-img="${i}" loading="lazy" decoding="async">
     </button>
     <p class="cap"><em>${esc(p.title)}</em><span>From ${money(fromPrice(p))}</span></p>
   </li>`).join("");
-
-const seriesList=[...new Set(PRINTS.map(p=>p.series).filter(Boolean))];
-let filter="";
-function renderFilters(){
-  if(!seriesList.length){$("#filters").hidden=true;return}
-  const opts=[["","All",PRINTS.length],...seriesList.map(n=>[n,n,PRINTS.filter(p=>p.series===n).length])];
-  $("#filters").innerHTML=opts.map(([v,label,n])=>
-    `<button type="button" data-filter="${esc(v)}" aria-pressed="${v===filter}">${esc(label)} <span>${n}</span></button>`).join("");
-}
-function applyFilter(v){
-  filter=v;
-  document.querySelectorAll("#sheet .cell").forEach(c=>{c.hidden=!!filter&&c.dataset.series!==filter});
-  renderFilters();
-}
-$("#filters").addEventListener("click",e=>{
-  const b=e.target.closest("[data-filter]");if(!b)return;
-  vt(()=>applyFilter(b.dataset.filter));
-});
-renderFilters();
 
 const SRC=[];
 function setSrc(i,src){
@@ -638,11 +500,8 @@ function setSrc(i,src){
   if(!lb.hidden&&cur===i)$("#lbImg").src=src;
 }
 const ORDER=[heroIdx,...PRINTS.map((p,i)=>i).filter(i=>i!==heroIdx)];
-function paintAll(k=0){
-  if(k>=ORDER.length)return;
-  const i=ORDER[k],p=PRINTS[i];
-  setSrc(i,p.src||paint(p));
-  setTimeout(()=>paintAll(k+1),0);
+function loadAll(){
+  ORDER.forEach(i=>{if(PRINTS[i].src)setSrc(i,PRINTS[i].src)});
 }
 
 /* ---------- Viewer ---------- */
@@ -752,7 +611,7 @@ $("#copyBtn").onclick=()=>{
   try{navigator.clipboard.writeText($("#msg").value).then(done,fallback)}catch(err){fallback()}
 };
 
-paintAll();
+loadAll();
 </script>
 
 </body>
